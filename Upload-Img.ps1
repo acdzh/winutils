@@ -1,0 +1,1 @@
+python "D:\Users\acdzh\Scripts\smms.py" $args
