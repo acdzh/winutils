@@ -1,5 +1,6 @@
-#include<windows.h>
-#include<stdio.h>
+#include <windows.h>
+#include <stdio.h>
+
 int main(int argc,char *argv[]) {
     char strCmd[1024] = {0}, *p;
     DWORD dwExitCode = -1;
