@@ -1,0 +1,1 @@
+Get-ChildItem -Recurse -Force | Where-Object  {$_.Name -Match '^\._(.*)' -or $_.Name -eq '.DS_Store'} | Remove-Item -Force
