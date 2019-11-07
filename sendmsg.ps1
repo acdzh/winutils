@@ -1,1 +1,0 @@
-python "D:\Users\acdzh\Documents\My_Documents\Code\winutils\msg.py" $args
