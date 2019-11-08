@@ -161,7 +161,6 @@ namespace getElecBills {
                 foreach (BuyInfo buyInfo in buyInfos) {
                 ss += String.Format("|{0, -20},|{1, 8},|{2, 8},|{3, 4};|\n", buyInfo.date, buyInfo.elec, buyInfo.cost, buyInfo.people);
                 }
-                Console.WriteLine(ss);
                 sendMsg(DateTime.Now.ToString("电费查询 (yyyy-MM-dd-hh:mm:ss)"), ss);
             }
         }
