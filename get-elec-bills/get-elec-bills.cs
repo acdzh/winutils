@@ -168,11 +168,15 @@ namespace getElecBills {
 
         static void sendMsg(string text, string desp) {
             string configPath = String.Format("{0}\\.config\\ServerChan\\SCKEY", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+            string configDirPath = String.Format("{0}\\.config\\ServerChan", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
             string scKey;
             if(!File.Exists(configPath)) {
                 Console.WriteLine("SCKEY未找到.");
                 Console.WriteLine("输入SCKEY(可在http://sc.ftqq.com/?c=code获取):");
                 scKey = Console.ReadLine();
+                if (!Directory.Exists(configDirPath)){
+                    Directory.CreateDirectory(configDirPath);
+                }
                 using (StreamWriter streamWriter = new StreamWriter(configPath)) {
                     streamWriter.Write(scKey);
                 }
@@ -191,12 +195,19 @@ namespace getElecBills {
                 "{0}\\.config\\get-elec-bills\\ROOM", 
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
             );
+            string roomDirPath = String.Format(
+                "{0}\\.config\\get-elec-bills", 
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+            );
             string room;
             if(!File.Exists(roomPath)) {
                 Console.WriteLine("房间配置未找到.");
                 Console.WriteLine("已初始化为默认房间.");
                 Console.WriteLine(string.Format("请完成一次正常查询, 将 post data 填入 {0} 文件中.", roomPath));
                 room = "__VIEWSTATE=%2FwEPDwULLTE0MTgxMTM1NTAPZBYCAgEPZBYIAgEPEGRkFgECB2QCAw8QDxYGHg1EYXRhVGV4dEZpZWxkBQhST09NTkFNRR4ORGF0YVZhbHVlRmllbGQFBnJvb21kbR4LXyFEYXRhQm91bmRnZBAVCAbmpbzmoIsN5Y%2BL5ZutMuWPt%2BalvA3lj4vlm60z5Y%2B35qW8DeWPi%2BWbrTTlj7fmpbwN5Y%2BL5ZutNeWPt%2BalvA3lj4vlm6025Y%2B35qW8CDE55Y%2B35qW8CDIw5Y%2B35qW8FQgAAjAyAjAzAjA0AjA1AjA2AjE5AjIwFCsDCGdnZ2dnZ2dnFgECB2QCBQ8QDxYGHwAFCFJPT01OQU1FHwEFBnJvb21kbR8CZ2QQFQgG5qW85bGCAjFGAjJGAjNGAjRGAjVGAjZGDjIw5Y%2B35qW85o6n5Yi2FQgABDIwMDEEMjAwMgQyMDAzBDIwMDQEMjAwNQQyMDA2BDIwMDcUKwMIZ2dnZ2dnZ2cWAQIEZAIHDxAPFgYfAAUIUk9PTU5BTUUfAQUGcm9vbWRtHwJnZBAVJwbmiL%2Fpl7QLMjDlj7fmpbw0MDELMjDlj7fmpbw0MDILMjDlj7fmpbw0MDMLMjDlj7fmpbw0MDQLMjDlj7fmpbw0MDULMjDlj7fmpbw0MDYLMjDlj7fmpbw0MDcLMjDlj7fmpbw0MDgLMjDlj7fmpbw0MDkLMjDlj7fmpbw0MTALMjDlj7fmpbw0MTELMjDlj7fmpbw0MTILMjDlj7fmpbw0MTMLMjDlj7fmpbw0MTQLMjDlj7fmpbw0MTULMjDlj7fmpbw0MTYLMjDlj7fmpbw0MTcLMjDlj7fmpbw0MTgLMjDlj7fmpbw0MTkLMjDlj7fmpbw0MjALMjDlj7fmpbw0MjELMjDlj7fmpbw0MjILMjDlj7fmpbw0MjMLMjDlj7fmpbw0MjQLMjDlj7fmpbw0MjULMjDlj7fmpbw0MjYLMjDlj7fmpbw0MjcLMjDlj7fmpbw0MjgLMjDlj7fmpbw0MjkLMjDlj7fmpbw0MzALMjDlj7fmpbw0MzELMjDlj7fmpbw0MzILMjDlj7fmpbw0MzMLMjDlj7fmpbw0MzQLMjDlj7fmpbw0MzULMjDlj7fmpbw0MzYLMjDlj7fmpbw0MzcLMjDlj7fmpbw0MzkVJwAGMjAwNDAxBjIwMDQwMgYyMDA0MDMGMjAwNDA0BjIwMDQwNQYyMDA0MDYGMjAwNDA3BjIwMDQwOAYyMDA0MDkGMjAwNDEwBjIwMDQxMQYyMDA0MTIGMjAwNDEzBjIwMDQxNAYyMDA0MTUGMjAwNDE2BjIwMDQxNwYyMDA0MTgGMjAwNDE5BjIwMDQyMAYyMDA0MjEGMjAwNDIyBjIwMDQyMwYyMDA0MjQGMjAwNDI1BjIwMDQyNgYyMDA0MjcGMjAwNDI4BjIwMDQyOQYyMDA0MzAGMjAwNDMxBjIwMDQzMgYyMDA0MzMGMjAwNDM0BjIwMDQzNQYyMDA0MzYGMjAwNDM3BjIwMDQzORQrAydnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dkZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WBAUEYnV5UgUFdXNlZFIFDEltYWdlQnV0dG9uMQUMSW1hZ2VCdXR0b24y6AbOOXnWTabp6hikFcpUpLJnIKmV2cglq5aXoN4aToM%3D&drlouming=9&drceng=20&dr_ceng=2004&drfangjian=200437&radio=usedR&ImageButton1.x=74&ImageButton1.y=13";
+                if (!Directory.Exists(roomDirPath)){
+                    Directory.CreateDirectory(roomDirPath);
+                }
                 using (StreamWriter streamWriter = new StreamWriter(roomPath)) {
                     streamWriter.Write(room);
                 }
