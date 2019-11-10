@@ -135,9 +135,17 @@ namespace getElecBills {
                     
                 }
             }
+
+            double countElec = 0;
+            double countCost = 0;
+            foreach (Usage usage in usages) {
+                countElec += usage.elec;
+                countCost += usage.cost;
+            }
             
 
             Console.WriteLine(String.Format("\n剩余电量 {0} 度, 折合电费 {1} 元.", elec, money));
+            Console.WriteLine(String.Format("平均用电量 {0} 度, 平均电费 {1} 元. 预计还能用 {2} 天.", countElec / usages.Count, countCost / usages.Count, elec * usages.Count / countElec));
             Console.WriteLine("\n使用情况: ");
             foreach (Usage usage in usages) {
                 Console.WriteLine(String.Format("{0,-8}, {1, 8}度, {2, 8}元", usage.date, usage.elec, usage.cost));
@@ -151,8 +159,9 @@ namespace getElecBills {
             Console.WriteLine("\n发送至手机(y/n)? ");
             String key = Console.ReadKey().Key.ToString();
             if (key == "Y") {
-                string ss = String.Format("\n剩余电量 {0} 度, 折合电费 {1} 元.\n\n\n\n使用情况: \n\n", elec, money);
-                ss += "|时间|用量(度)|折合电价(元)|\n|----------|----------|----------|\n";
+                string ss = String.Format("\n剩余电量 {0} 度, 折合电费 {1} 元.\n", elec, money);
+                ss += String.Format("\n平均用电量 {0} 度, 平均电费 {1} 元. 预计还能用 {2} 天.", countElec / usages.Count, countCost / usages.Count, elec * usages.Count / countElec);
+                ss += "\n\n\n使用情况: \n\n|时间|用量(度)|折合电价(元)|\n|----------|----------|----------|\n";
                 foreach (Usage usage in usages) {
                     ss += String.Format("|{0, -20},\t|{1, 8},\t|{2, 8};|\n", usage.date, usage.elec, usage.cost);
                 }
@@ -184,7 +193,7 @@ namespace getElecBills {
                     scKey = streamReader.ReadLine();
                 }
             }
-            Console.WriteLine("发送中...");
+            Console.WriteLine("\n发送中...");
             HttpWebRequest req = (HttpWebRequest) WebRequest.Create(string.Format("https://sc.ftqq.com/{0}.send?text={1}&desp={2}", scKey, text, desp));
             req.GetResponse();
         }
