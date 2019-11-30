@@ -146,15 +146,23 @@ namespace getElecBills {
 
             Console.WriteLine(String.Format("\n剩余电量 {0} 度, 折合电费 {1} 元.", elec, money));
             Console.WriteLine(String.Format("平均用电量 {0} 度, 平均电费 {1} 元. 预计还能用 {2} 天.", countElec / usages.Count, countCost / usages.Count, elec * usages.Count / countElec));
-            Console.WriteLine("\n使用情况: ");
+            Console.WriteLine("");
+            Console.WriteLine("┌────────────────────────────────┐");
+            Console.WriteLine("|使用情况:                       |");
+            Console.WriteLine("├──────────┬──────────┬──────────┤");
             foreach (Usage usage in usages) {
-                Console.WriteLine(String.Format("{0,-8}, {1, 8}度, {2, 8}元", usage.date, usage.elec, usage.cost));
+                Console.WriteLine(String.Format("|{0,-8}|{1, 8}度|{2, 8}元|", usage.date, usage.elec, usage.cost));
             }
+            Console.WriteLine("└──────────┴──────────┴──────────┘");
 
-            Console.WriteLine("\n充值记录: ");
+            Console.WriteLine("");
+            Console.WriteLine("┌──────────────────────────────────────────────────┐");
+            Console.WriteLine("|充值记录:                                         |");
+            Console.WriteLine("├────────────────────┬──────────┬──────────┬───────┤");
             foreach (BuyInfo buyInfo in buyInfos) {
-                Console.WriteLine(String.Format("{0, -20}, {1, 8}度, {2, 8}元, {3, 4}", buyInfo.date, buyInfo.elec, buyInfo.cost, buyInfo.people));
+                Console.WriteLine(String.Format("|{0, -20}|{1, 8}度|{2, 8}元|{3, 4}|", buyInfo.date, buyInfo.elec, buyInfo.cost, buyInfo.people));
             }
+            Console.WriteLine("└────────────────────┴──────────┴──────────┴───────┘");
 
             Console.WriteLine("\n发送至手机(y/n)? ");
             String key = Console.ReadKey().Key.ToString();
